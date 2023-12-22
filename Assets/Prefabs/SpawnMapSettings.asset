@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca03333a8e44b43851541224b805dcf, type: 3}
+  m_Name: SpawnMapSettings
+  m_EditorClassIdentifier: 
+  _sizeAllField: 5
+  _scale: 10
+  _octaves: 4
+  _persistence: 0.5
+  _void: 1
+  _seed: 1
+  _offset: {x: 0, y: 0}
+  _ruleTiles:
+  - {fileID: 11400000, guid: f828a9d1dcbcca0499a2ea251df6c320, type: 2}
