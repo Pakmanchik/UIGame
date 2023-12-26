@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: SpawnMapSettings
   m_EditorClassIdentifier: 
   _sizeAllField: 5
+  _positionZ: 1
+  _outline: 0
   _scale: 10
   _octaves: 4
   _persistence: 0.5
-  _void: 1
+  _lacunarity: 1
   _seed: 1
-  _offset: {x: 0, y: 0}
   _ruleTiles:
   - {fileID: 11400000, guid: f828a9d1dcbcca0499a2ea251df6c320, type: 2}

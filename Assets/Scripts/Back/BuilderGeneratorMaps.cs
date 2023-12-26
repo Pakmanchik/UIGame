@@ -6,7 +6,12 @@ namespace Back
 {
     public sealed class BuilderGeneratorMaps
     {
-        private Vector2 _sizeField = new Vector2(1,1);
+        public BuilderGeneratorMaps()
+        {
+            ResetData();
+        }
+        
+        private Vector2 _sizeField = new Vector2(1, 1);
 
         private float _scale = 1;
         private int _positionZ = 1;
@@ -20,6 +25,31 @@ namespace Back
 
         private List<RuleTile> _ruleTiles;
         private Tilemap _tilemap;
+
+        private bool _isLoot;
+        private float _lowerSearchThreshold;
+        private float _upperSearchThreshold;
+
+
+        private void ResetData()
+        {
+            _sizeField = new Vector2(1, 1);
+
+            _scale = 1;
+            _positionZ = 1;
+
+            _octaves = 1;
+            _persistence = 0.5f;
+            _lacunarity = 1;
+
+            _seed = 1;
+
+            _offset = Vector2.zero;
+
+            _isLoot = false;
+            _lowerSearchThreshold = -2;
+            _upperSearchThreshold = 2;
+        }
 
         public BuilderGeneratorMaps AddSizeField(int size, int positionZ = 1)
         {
@@ -73,6 +103,21 @@ namespace Back
             return this;
         }
 
+        public BuilderGeneratorMaps AddRuleIsLoot(float lowerSearchThreshold, float upperSearchThreshold)
+        {
+            if (lowerSearchThreshold > upperSearchThreshold)
+            {
+                (lowerSearchThreshold, upperSearchThreshold) = (upperSearchThreshold, lowerSearchThreshold);
+            }
+
+            _lowerSearchThreshold = lowerSearchThreshold;
+            _upperSearchThreshold = upperSearchThreshold;
+
+            _isLoot = true;
+            
+            return this;
+        }
+
         public void Build()
         {
             var settingsMap = new SettingsTileMap
@@ -81,7 +126,11 @@ namespace Back
                 offset = _offset,
                 ruleTiles = _ruleTiles,
                 tilemap = _tilemap,
-                positionZ = _positionZ
+                positionZ = _positionZ,
+                isLoot = _isLoot,
+                lowerSearchThreshold = _lowerSearchThreshold,
+                upperSearchThreshold = _upperSearchThreshold,
+                seed = _seed
             };
             var settingNoise = new SettingsNoise()
             {
@@ -94,6 +143,8 @@ namespace Back
             };
 
             var unused = new GeneratorChunk(settingsMap, settingNoise);
+            
+            ResetData();
         }
     }
 
@@ -104,5 +155,9 @@ namespace Back
         public Vector2 offset;
         public List<RuleTile> ruleTiles;
         public Tilemap tilemap;
+        public bool isLoot;
+        public float lowerSearchThreshold;
+        public float upperSearchThreshold;
+        public int seed;
     }
 }

@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: BasicMapSettings
   m_EditorClassIdentifier: 
   _sizeAllField: 76
+  _positionZ: 1
+  _outline: 0
   _scale: 10
   _octaves: 4
   _persistence: 0.5
-  _void: 1
+  _lacunarity: 1
   _seed: 1
-  _offset: {x: 0, y: 0}
   _ruleTiles:
   - {fileID: 11400000, guid: e93f98cb75244e94a80171e99ad9bae1, type: 2}
-  - {fileID: 11400000, guid: 4558765f16701ee47b08523515deaea2, type: 2}
   - {fileID: 11400000, guid: af501040185aa2c4198270cc51714d05, type: 2}
   - {fileID: 11400000, guid: 5e8b8c974e837cc43a6047f0112b5bac, type: 2}
   - {fileID: 11400000, guid: d8e2fb00c5013a74ca768b64fdd8e404, type: 2}

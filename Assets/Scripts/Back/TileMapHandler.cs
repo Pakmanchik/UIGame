@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -12,6 +11,8 @@ namespace Back
         {
             [SerializeField] public GeneratorSettings _basicTileSettings;
             [SerializeField] public GeneratorSettings _spawnTileSettings;
+            [SerializeField] public GeneratorSettings _bottomTileSettings;
+            [SerializeField] public LootSettings _lootSettings;
         }
 
         [SerializeField] private Tilemap _tileMap;
@@ -19,11 +20,29 @@ namespace Back
         [SerializeField, Space(5)] private RuleTile _defaultTile;
 
         [SerializeField] private SettingsMap _settingsMap;
-
-        [SerializeField] private int _outlineCounter = 2;
-
+        
         private GeneratorSettings BasicSetting => _settingsMap._basicTileSettings;
         private GeneratorSettings SpawnSetting => _settingsMap._spawnTileSettings;
+        private GeneratorSettings BottomMapSetting => _settingsMap._bottomTileSettings;
+        private LootSettings LootSettings => _settingsMap._lootSettings;
+
+        private void OnValidate()
+        {
+            if (BasicSetting == null)
+                Debug.LogError("Basic Setting is NULL");
+
+            if (SpawnSetting == null)
+                Debug.LogError("Spawn Setting is NULL");
+            
+            if (BottomMapSetting == null)
+                Debug.LogError("Bottom Map Setting is NULL");
+
+            if (_tileMap == null)
+                Debug.LogError("TileMap is NULL");
+
+            if (_defaultTile == null)
+                Debug.LogError("Default Tile is NULL");
+        }
 
         private void Start()
         {
@@ -37,24 +56,25 @@ namespace Back
             __CreateBottomLayerMap();
             __CreateBaseMap();
             __CreateSpawnPlace();
+            __CreateLoot();
 
             void __CreateBottomLayerMap()
             {
                 var noiseBottomSettings = new SettingsNoise()
                 {
-                    scale = BasicSetting.Scale,
-                    persistence = BasicSetting.Persistence,
-                    lacunarity = BasicSetting.Lacunarity,
-                    octaves = BasicSetting.Octaves
+                    scale = BottomMapSetting.Scale,
+                    persistence = BottomMapSetting.Persistence,
+                    lacunarity = BottomMapSetting.Lacunarity,
+                    octaves = BottomMapSetting.Octaves,
+                    seed = BottomMapSetting.Seed
                 };
-
-                var size = BasicSetting.SizeAllField + _outlineCounter;
+                
 
                 builderTileMap
-                    .AddTiles(new List<RuleTile> { _defaultTile }, _tileMap)
-                    .AddSeed(BasicSetting.Seed)
+                    .AddTiles(BottomMapSetting.RuleTiles, _tileMap)
+                    .AddSeed(BottomMapSetting.Seed)
                     .AddSettingsNoise(noiseBottomSettings)
-                    .AddSizeField(size, 0)
+                    .AddSizeField(BottomMapSetting.SizeAllField, BottomMapSetting.PositionZ)
                     .Build();
             }
 
@@ -65,7 +85,8 @@ namespace Back
                     scale = BasicSetting.Scale,
                     persistence = BasicSetting.Persistence,
                     lacunarity = BasicSetting.Lacunarity,
-                    octaves = BasicSetting.Octaves
+                    octaves = BasicSetting.Octaves,
+                    seed = BasicSetting.Seed
                 };
 
                 builderTileMap
@@ -85,7 +106,8 @@ namespace Back
                     scale = SpawnSetting.Scale,
                     persistence = SpawnSetting.Persistence,
                     lacunarity = SpawnSetting.Lacunarity,
-                    octaves = SpawnSetting.Octaves
+                    octaves = SpawnSetting.Octaves,
+                    seed = SpawnSetting.Seed
                 };
 
                 var halfX = BasicSetting.SizeAllField - SpawnSetting.SizeAllField;
@@ -117,6 +139,26 @@ namespace Back
                             .Build();
                     }
                 }
+            }
+
+            void __CreateLoot()
+            {
+                var noiseLootSettings = new SettingsNoise()
+                {
+                    scale = LootSettings.Scale,
+                    persistence = LootSettings.Persistence,
+                    lacunarity = LootSettings.Lacunarity,
+                    octaves = LootSettings.Octaves,
+                    seed = LootSettings.Seed
+                };
+                
+                builderTileMap
+                    .AddTiles(LootSettings.RuleTiles, _tileMap)
+                    .AddSeed(LootSettings.Seed)
+                    .AddSettingsNoise(noiseLootSettings)
+                    .AddSizeField(LootSettings.SizeAllField, LootSettings.PositionZ)
+                    .AddRuleIsLoot(LootSettings.LowerSearchThreshold,LootSettings.UpperSearchThreshold)
+                    .Build();
             }
         }
     }
