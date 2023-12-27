@@ -1,6 +1,7 @@
+using UIGame.Scripts.Settings;
 using UnityEngine;
 
-namespace UIGame.Scripts
+namespace UIGame.Scripts.Back
 {
     public class LevelHandler
     {
@@ -9,11 +10,11 @@ namespace UIGame.Scripts
             _questionData = questionData;
             _backModel = backModel;
 
-            _backModel.onNextHint += NextHint;
+            _backModel.onNextHint += SetNextHint;
             _backModel.onCheckAnswer += CheckAnswer;
             _backModel.onExpireTime += ExpireTime;
             
-            ChangeLevel();
+            SetLevel();
         }
 
         private readonly IBackModel _backModel;
@@ -25,7 +26,7 @@ namespace UIGame.Scripts
 
         private void NewLevel()
         {
-            var newLevel = _countLevelNow + 1;
+            var newLevel = _countLevelNow + 1 ;
             
             if (newLevel >= _questionData.Length)
             {
@@ -36,10 +37,10 @@ namespace UIGame.Scripts
             
             _countHintNow = 0;
             
-            ChangeLevel();
+            SetLevel();
         }
         
-        private void ChangeLevel()
+        private void SetLevel()
         {
             _countLevelNow++;
             
@@ -55,7 +56,7 @@ namespace UIGame.Scripts
             
             _backModel.SetDataLevel(data);
             
-            _countHintNow++;
+            _countHintNow ++;
             
             SetOptionalAnswer();
         }
@@ -70,21 +71,24 @@ namespace UIGame.Scripts
             }
         }
 
-        private void NextHint()
+        private void SetNextHint()
         {
-            var hintCount = _countHintNow + 1;
-            
-            if (_countHintNow >= _questionData[_countLevelNow].Hint.Length)
+            while (true)
             {
-                _countHintNow = 0;
-                
-                NewLevel();
-                return;
+                var hintCount = _countHintNow + 1;
+
+                if (_countHintNow >= _questionData[_countLevelNow].Hint.Length)
+                {
+                    _countHintNow = 0;
+
+                    continue;
+                }
+
+                _backModel.SetNewHint(hintCount, _questionData[_countLevelNow].Hint[_countHintNow]);
+
+                _countHintNow++;
+                break;
             }
-            
-            _backModel.SetNewHint(hintCount,_questionData[_countLevelNow].Hint[_countHintNow]);
-            
-            _countHintNow++;
         }
 
         private void CheckAnswer(Sprite sprite)

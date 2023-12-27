@@ -3,7 +3,7 @@ using System.Collections;
 using UIGame.Scripts.GameManager;
 using UnityEngine;
 
-namespace UIGame.Scripts
+namespace UIGame.Scripts.UI
 {
     public class TimeController
     {

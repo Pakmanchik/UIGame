@@ -5,7 +5,7 @@ namespace UIGame.Scripts.GameManager
 {
     public sealed class Coroutines : MonoBehaviour
     {
-        private static Coroutines instance
+        private static Coroutines Instance
         {
             get
             {
@@ -23,13 +23,13 @@ namespace UIGame.Scripts.GameManager
 
         public static Coroutine StartRoutine(IEnumerator enumerator)
         {
-            return instance.StartCoroutine(enumerator);
+            return Instance.StartCoroutine(enumerator);
         }
 
         public static void StopRoutine(Coroutine routine)
         {
             if (routine != null)
-                instance.StopCoroutine(routine);
+                Instance.StopCoroutine(routine);
         }
     }
 }

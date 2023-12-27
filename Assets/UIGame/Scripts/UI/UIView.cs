@@ -1,6 +1,9 @@
 using System;
 using TMPro;
+using UIGame.Scripts.Back;
+using UIGame.Scripts.Settings;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
@@ -24,8 +27,8 @@ namespace UIGame.Scripts.UI
         [Serializable]
         private struct EndTable
         {
-            public Canvas _parent;
-            public TMP_Text _currentAnswerText;
+            public Canvas _parentCanvas;
+            public TMP_Text _valueCorrectAnswerText;
             public TMP_Text _valueQuestionText;
             public TMP_Text _resultText;
             public TMP_Text _timerText;
@@ -62,7 +65,7 @@ namespace UIGame.Scripts.UI
 
         private void Start()
         {
-            _endTable._parent.enabled = false;
+            _endTable._parentCanvas.enabled = false;
             
             _nextHintButton.onClick.AddListener(NextHint);
         }
@@ -145,26 +148,30 @@ namespace UIGame.Scripts.UI
             var ran = new Random();
 
             __RandomPoint();
+            return;
 
             void __RandomPoint()
             {
-                var spritePoint = ran.Next(0, _pointAnswer.Length);
-
-                var go = _pointAnswer[spritePoint].gameObject;
-
-                var image = go.GetComponent<Image>();
-
-                if (image.sprite != null)
+                while (true)
                 {
-                    __RandomPoint();
-                    return;
-                }
+                    var spritePoint = ran.Next(0, _pointAnswer.Length);
 
-                image.sprite = sprite;
+                    var go = _pointAnswer[spritePoint].gameObject;
+
+                    var image = go.GetComponent<Image>();
+
+                    if (image.sprite != null)
+                    {
+                        continue;
+                    }
+
+                    image.sprite = sprite;
+                    break;
+                }
             }
         }
 
-        public Vector3[] CheckHit()
+        public Vector3[] GetSidesField()
         {
             var vectorAllPos = new Vector3[4];
 
@@ -193,9 +200,9 @@ namespace UIGame.Scripts.UI
             _endTable._timerText.text = time.ToString();
         }
 
-        public void EndGameTable(int valueCorrectAnswer,int valueQuestion)
+        public void SetEndGameTable(int valueCorrectAnswer,int valueQuestion)
         {
-            _endTable._currentAnswerText.text = valueCorrectAnswer.ToString();
+            _endTable._valueCorrectAnswerText.text = valueCorrectAnswer.ToString();
             _endTable._valueQuestionText.text = valueQuestion.ToString();
 
             if (valueCorrectAnswer == 0)
@@ -205,7 +212,7 @@ namespace UIGame.Scripts.UI
 
             _endTable._resultText.text = valueCorrectAnswer >= result ? _endTable._goodResult : _endTable._badResult;
             
-            _endTable._parent.enabled = true;
+            _endTable._parentCanvas.enabled = true;
         }
     }
 }

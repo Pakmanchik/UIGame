@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UIGame.Scripts
+namespace UIGame.Scripts.Settings
 {
     [CreateAssetMenu(fileName = "New Question Data", menuName = "Question Data", order = 53)]
     public class QuestionData : ScriptableObject

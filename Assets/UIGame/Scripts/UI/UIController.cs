@@ -32,7 +32,7 @@ namespace UIGame.Scripts.UI
             _uiMover.onChangePosition += (vector3, sprite) =>
             {
                 _sprite = sprite;
-               var arrVector = _uiView.CheckHit();
+               var arrVector = _uiView.GetSidesField();
                
                var leftUpPos = arrVector[0];
                var rightDownPos = arrVector[1];
@@ -87,9 +87,9 @@ namespace UIGame.Scripts.UI
                 _uiView.SetSpriteForAnswer(s);
             };
             
-            _uiModel.onSetHint += (i, s) =>
+            _uiModel.onSetHint += (countHint, hintText) =>
             {
-                _uiView.ChangeHint(s, i);
+                _uiView.ChangeHint(hintText, countHint);
             };
             
             _uiModel.onSetLevel += levelData =>
@@ -102,7 +102,7 @@ namespace UIGame.Scripts.UI
             _uiModel.onGameFinal += (valueCorrectAnswer, valueQuestion) =>
             {
                 _endGame = true;
-                _uiView.EndGameTable(valueCorrectAnswer, valueQuestion);
+                _uiView.SetEndGameTable(valueCorrectAnswer, valueQuestion);
                 _timeController.StopTimer();
                 _timeController.StartTimer(5);
             };

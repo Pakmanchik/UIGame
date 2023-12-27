@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UIGame.Scripts
+namespace UIGame.Scripts.Settings
 {
     public class PointAnswer: MonoBehaviour
     {

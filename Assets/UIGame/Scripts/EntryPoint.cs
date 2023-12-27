@@ -1,20 +1,21 @@
 using System;
+using UIGame.Scripts.Back;
+using UIGame.Scripts.Settings;
 using UIGame.Scripts.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace UIGame.Scripts
 {
     public class EntryPoint : MonoBehaviour
     {
         [SerializeField] private QuestionData[] _levelData;
-        [SerializeField] private ViewObject _viewObject;
+        [SerializeField] private ViewObjects _viewObjects;
 
-        private UIView UIView => _viewObject._uiView;
-        private UIMover UIMover => _viewObject._uiMover;
+        private UIView UIView => _viewObjects._uiView;
+        private UIMover UIMover => _viewObjects._uiMover;
         
         [Serializable]
-        private struct ViewObject
+        private struct ViewObjects
         {
             public UIView _uiView;
             public UIMover _uiMover;
@@ -22,6 +23,11 @@ namespace UIGame.Scripts
         
         private void OnValidate()
         {
+            if (UIView == null)
+                Debug.LogError("UIView is NULL");
+            if (UIMover == null)
+                Debug.LogError("UIMover is NULL");
+            
             if (_levelData == null)
                 Debug.LogError("Level Data is NULL");
             

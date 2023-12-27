@@ -1,20 +1,24 @@
 using System;
+using UIGame.Scripts.Back;
 using UnityEngine;
 
 namespace UIGame.Scripts
 {
     public class GameModel : IBackModel, IUIModel
     {
+// Back          
         public event Action onNextHint; 
         public event Action<Sprite> onCheckAnswer; 
         public event Action onExpireTime; 
         
+// UI        
         public event Action<ImportantDataLevel> onSetLevel; 
         public event Action<int,string> onSetHint; 
         public event Action<AnswerResult> onSetResultAnswer; 
         public event Action<Sprite> onSetSprite; 
         public event Action<int,int> onGameFinal; 
-        
+       
+// Back        
         public void SetDataLevel(ImportantDataLevel importantDataLevel)
         {
             onSetLevel?.Invoke(importantDataLevel);
@@ -39,8 +43,8 @@ namespace UIGame.Scripts
         {
             onSetSprite?.Invoke(sprite);
         }
-
-
+        
+// UI
         public void SendMessageAboutExpireTime()
         {
             onExpireTime?.Invoke();

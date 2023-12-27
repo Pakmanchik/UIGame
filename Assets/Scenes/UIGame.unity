@@ -629,8 +629,8 @@ MonoBehaviour:
     _unCorrectColor: {r: 0.9176471, g: 0.3372549, b: 0.3372549, a: 1}
     _correctColor: {r: 0.16470589, g: 0.8000001, b: 0.40000004, a: 1}
   _endTable:
-    _parent: {fileID: 1629539333}
-    _currentAnswerText: {fileID: 92322864}
+    _parentCanvas: {fileID: 1629539333}
+    _valueCorrectAnswerText: {fileID: 92322864}
     _valueQuestionText: {fileID: 1701541732}
     _resultText: {fileID: 1544864116}
     _timerText: {fileID: 764127295}
@@ -1357,7 +1357,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1335ecdee9ec174fbc71ba34118a40f, type: 2}
   - {fileID: 11400000, guid: cf4186f3a05fba149ba6cb2a54241cb3, type: 2}
   - {fileID: 11400000, guid: c6d35bd7a8b223348bdc7b4620dd3597, type: 2}
-  _viewObject:
+  _viewObjects:
     _uiView: {fileID: 222583662}
     _uiMover: {fileID: 222583667}
 --- !u!4 &702453712
