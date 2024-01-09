@@ -189,7 +189,7 @@ namespace UIGame.Scripts.UI
             if (time < 0)
                 time = 0;
 
-            _fieldQuestionObject._timer.text = time.ToString();
+            _fieldQuestionObject._timer.text = $"{time} sec";
         }
         
         public void ChangeTimerExit(int time)
@@ -210,7 +210,7 @@ namespace UIGame.Scripts.UI
             
             var result = valueQuestion / valueCorrectAnswer;
 
-            _endTable._resultText.text = valueCorrectAnswer >= result ? _endTable._goodResult : _endTable._badResult;
+            _endTable._resultText.text = valueCorrectAnswer > result ? _endTable._goodResult : _endTable._badResult;
             
             _endTable._parentCanvas.enabled = true;
         }
