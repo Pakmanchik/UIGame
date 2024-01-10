@@ -1,17 +1,25 @@
 using System;
 using System.Collections;
-using UIGame.Scripts.GameManager;
+using UIGame.Scripts.GameManager.Coroutines;
 using UnityEngine;
 
 namespace UIGame.Scripts.UI
 {
     public class TimeController
     {
+        public TimeController(ICoroutineManager coroutineManager)
+        {
+            _coroutineManager = coroutineManager;
+        }
+        
         public event Action<int> onTimeNow;
         public event Action onTimeExpire;
 
         private int _timeNow;
         private Coroutine _routine;
+
+        private readonly ICoroutineManager _coroutineManager;
+        
         
         public void StartTimer(int time)
         {
@@ -19,7 +27,7 @@ namespace UIGame.Scripts.UI
             
            onTimeNow?.Invoke(_timeNow);
             
-            _routine = Coroutines.StartRoutine(BeginTimer());
+            _routine = _coroutineManager.Start(BeginTimer());
         }
 
         private IEnumerator BeginTimer()
@@ -42,7 +50,7 @@ namespace UIGame.Scripts.UI
 
         public void StopTimer()
         {
-            Coroutines.StopRoutine(_routine);
+            _coroutineManager.Stop(_routine);
         }
     }
 }
