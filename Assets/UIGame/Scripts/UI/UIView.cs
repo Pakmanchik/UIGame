@@ -3,13 +3,12 @@ using TMPro;
 using UIGame.Scripts.Back;
 using UIGame.Scripts.Settings;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = System.Random;
 
 namespace UIGame.Scripts.UI
 {
-    public class UIView : MonoBehaviour
+    public partial class UIView : MonoBehaviour
     {
         public event Action onNewHint;
 
@@ -23,45 +22,6 @@ namespace UIGame.Scripts.UI
         [SerializeField] private EndTable _endTable;
 
         private int _requests;
-        
-        [Serializable]
-        private struct EndTable
-        {
-            public Canvas _parentCanvas;
-            public TMP_Text _valueCorrectAnswerText;
-            public TMP_Text _valueQuestionText;
-            public TMP_Text _resultText;
-            public TMP_Text _timerText;
-
-            public string _goodResult;
-            public string _badResult;
-        }
-
-        [Serializable]
-        private struct ResultAnswer
-        {
-            public string _correctAnswer;
-            public string _unCorrectAnswer;
-            public string _expireAnswer;
-
-            public Color _unCorrectColor;
-            public Color _correctColor;
-        }
-
-        [Serializable]
-        private struct QuestionInfo
-        {
-            public TMP_Text _number;
-            public TMP_Text _result;
-        }
-
-        [Serializable]
-        private struct FieldQuestionObject
-        {
-            public TMP_Text _timer;
-            public TMP_Text _numberHint;
-            public TMP_Text _textHint;
-        }
 
         private void Start()
         {
@@ -213,6 +173,49 @@ namespace UIGame.Scripts.UI
             _endTable._resultText.text = valueCorrectAnswer > result ? _endTable._goodResult : _endTable._badResult;
             
             _endTable._parentCanvas.enabled = true;
+        }
+    }
+
+    // Decorate private struct
+    public partial class UIView
+    {
+        [Serializable]
+        private struct EndTable
+        {
+            public Canvas _parentCanvas;
+            public TMP_Text _valueCorrectAnswerText;
+            public TMP_Text _valueQuestionText;
+            public TMP_Text _resultText;
+            public TMP_Text _timerText;
+
+            public string _goodResult;
+            public string _badResult;
+        }
+
+        [Serializable]
+        private struct ResultAnswer
+        {
+            public string _correctAnswer;
+            public string _unCorrectAnswer;
+            public string _expireAnswer;
+
+            public Color _unCorrectColor;
+            public Color _correctColor;
+        }
+
+        [Serializable]
+        private struct QuestionInfo
+        {
+            public TMP_Text _number;
+            public TMP_Text _result;
+        }
+
+        [Serializable]
+        private struct FieldQuestionObject
+        {
+            public TMP_Text _timer;
+            public TMP_Text _numberHint;
+            public TMP_Text _textHint;
         }
     }
 }

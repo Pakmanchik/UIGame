@@ -1,4 +1,4 @@
-namespace UIGame.Scripts
+namespace UIGame.Scripts.Settings
 {
     public enum AnswerResult
     {

@@ -1,3 +1,6 @@
+using UIGame.Scripts.GameManager.Coroutines;
+using UIGame.Scripts.Model;
+using UIGame.Scripts.Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +13,9 @@ namespace UIGame.Scripts.UI
             _uiModel = uiModel;
             _uiView = uiView;
             _uiMover = uiMover;
+            _coroutineManager = new CoroutineSystem();
 
-            _timeController = new TimeController();
+            _timeController = new TimeController(_coroutineManager);
             
             SubscribeOnAnyEvent();
             SubscribeOnEventUIModel();
@@ -26,6 +30,8 @@ namespace UIGame.Scripts.UI
 
         private Sprite _sprite;
         private bool _endGame;
+
+        private  ICoroutineManager _coroutineManager;
 
         private void SubscribeOnEventUIMover()
         {

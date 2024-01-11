@@ -1,3 +1,4 @@
+using UIGame.Scripts.Model;
 using UIGame.Scripts.Settings;
 using UnityEngine;
 
@@ -10,13 +11,11 @@ namespace UIGame.Scripts.Back
             _questionData = questionData;
             _backModel = backModel;
 
-            _backModel.onNextHint += SetNextHint;
-            _backModel.onCheckAnswer += CheckAnswer;
-            _backModel.onExpireTime += ExpireTime;
+            Subscribe();
             
             SetLevel();
         }
-
+        
         private readonly IBackModel _backModel;
         private readonly QuestionData[] _questionData;
         
@@ -111,13 +110,19 @@ namespace UIGame.Scripts.Back
             
             NewLevel();
         }
-    }
-
-    public struct ImportantDataLevel
-    {
-        public int levelCount;
-        public int hintCount;
-        public string hintText;
-        public int timer;
+        
+        private void Subscribe()
+        {
+            _backModel.onNextHint += SetNextHint;
+            _backModel.onCheckAnswer += CheckAnswer;
+            _backModel.onExpireTime += ExpireTime;
+        }
+        
+        private void UnSubscribe()
+        {
+            _backModel.onNextHint -= SetNextHint;
+            _backModel.onCheckAnswer -= CheckAnswer;
+            _backModel.onExpireTime -= ExpireTime;
+        }
     }
 }
